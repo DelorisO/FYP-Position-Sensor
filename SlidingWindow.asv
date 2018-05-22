@@ -1,0 +1,20 @@
+% Implementation of the sliding window function
+
+%Creating a function on which to test this with
+
+y = linspace(0,5000);
+x = y;
+
+plot(x,y);
+
+w=200;
+counter = 0;
+
+for k=1:500
+    w_y(k-1)=y(k-1);
+    if mod(k,w) == 0
+        w_y(k-w:k) = 2*w_y(k-w:k);
+    end
+end
+
+plot(w_y);

@@ -1,0 +1,16 @@
+%doing the fft ??
+
+load('ExampleData.mat');
+AFFT = fft(Accelerometer(1,:),b1);
+GFFT = fft(Gyroscope(1,:));
+MFFT = ;
+
+%--------------------------------------------------------------------------
+
+%Frequency Domain Features
+centroid = 0;
+spread = 0;
+peak = 0;
+power1 = 0;
+power2 = 0;
+power3 = 0;
