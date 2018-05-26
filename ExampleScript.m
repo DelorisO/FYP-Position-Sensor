@@ -65,7 +65,7 @@ linkaxes(axis, 'x');
 %% Process sensor data through algorithm
 
 AHRS = MadgwickAHRS('SamplePeriod', 1/256, 'Beta', 0.1);
-%AHRS = MahonyAHRS('SamplePeriod', 1/256, 'Kp', 0.5);
+% AHRS = MahonyAHRS('SamplePeriod', 1/256, 'Kp', 0.5);
 
 quaternion = zeros(length(time), 4);
 for t = 1:length(time)
@@ -81,34 +81,7 @@ end
 
 euler = quatern2euler(quaternConj(quaternion)) * (180/pi);	% use conjugate for sensor frame relative to Earth and convert to degrees.
 
-figure('Name', 'Euler Angles Madgwick');
-hold on;
-plot(time, euler(:,1), 'r');
-plot(time, euler(:,2), 'g');
-plot(time, euler(:,3), 'b');
-title('Euler angles');
-xlabel('Time (s)');
-ylabel('Angle (deg)');
-legend('\phi', '\theta', '\psi');
-hold off;
-
-AHRS = MahonyAHRS('SamplePeriod', 1/256, 'Kp', 0.5);
-
-quaternion = zeros(length(time), 4);
-for t = 1:length(time)
-    AHRS.Update(Gyroscope(t,:) * (pi/180), Accelerometer(t,:), Magnetometer(t,:));	% gyroscope units must be radians
-    quaternion(t, :) = AHRS.Quaternion;
-end
-
-%% Plot algorithm output as Euler angles
-% The first and third Euler angles in the sequence (phi and psi) become
-% unreliable when the middle angles of the sequence (theta) approaches ±90
-% degrees. This problem commonly referred to as Gimbal Lock.
-% See: http://en.wikipedia.org/wiki/Gimbal_lock
-
-euler = quatern2euler(quaternConj(quaternion)) * (180/pi);	% use conjugate for sensor frame relative to Earth and convert to degrees.
-
-figure('Name', 'Euler Angles Mahony');
+figure('Name', 'Euler Angles');
 hold on;
 plot(time, euler(:,1), 'r');
 plot(time, euler(:,2), 'g');

@@ -1,3 +1,5 @@
+%This place is where the PCA goes
+
 load('ExampleData.mat');
 
 figure('Name', 'Sensor Data');

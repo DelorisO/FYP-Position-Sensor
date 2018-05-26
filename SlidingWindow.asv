@@ -1,20 +1,20 @@
 % Implementation of the sliding window function
-
+function SW = SlidingWindow(y)
 %Creating a function on which to test this with
 
-y = linspace(0,5000);
-x = y;
+%Created a mock function to deal with this
 
-plot(x,y);
-
-w=200;
+w=20;
 counter = 0;
 
-for k=1:500
-    w_y(k-1)=y(k-1);
+for k=1:5000
+    w_y(k)=y(k);
     if mod(k,w) == 0
-        w_y(k-w:k) = 2*w_y(k-w:k);
+        %do processing function
+        %SW(k+1-w:k) = 2*w_y(k+1-w:k);
+        SW(k)
+        counter = counter+1;
     end
 end
 
-plot(w_y);
+end
