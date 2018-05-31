@@ -8,93 +8,101 @@ clear;
 fs1 = '%f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f ';
 fs2 = '%f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f';
 fs = strcat(fs1,fs2);
-%for loop because each segment is kept in different text files :|
+
 A1 = []; %make empty array A to keep data in
-for i=1:60
-    fnumber = num2str(i);%convert the number to string
-        %then depending on what number it is make that number the filename .txt
-    if i<10
-        fn = strcat('s0',fnumber,'.txt');
-    else
-        fn = strcat('s',fnumber,'.txt');
+A2 = []; %make empty array A to keep data in
+A3 = []; %make empty array A to keep data in
+A4 = []; %make empty array A to keep data in
+
+%another for loop for each person
+for j=1:8
+    
+    pnumber = num2str(j);
+    pn = strcat('p',pnumber);
+    
+    %for loop because each segment is kept in different text files :|
+    for i=1:60
+        fnumber = num2str(i);%convert the number to string
+            %then depending on what number it is make that number the filename .txt
+        if i<10
+            fn = strcat('s0',fnumber,'.txt');
+        else
+            fn = strcat('s',fnumber,'.txt');
+        end
+        %a01-sitting a02-standing a03-lying on back a04-lying on right side
+        filename = fullfile('data','a01',pn,fn);
+        fid = fopen(filename,'r');
+        datacell = textscan(fid, fs, 'Delimiter', ',');
+        fclose(fid);
+        B = cell2mat(datacell); %convert cell format to array format
+        A1 = [A1;B]; %everytime you read from a new text file 
     end
-    %a01-sitting a02-standing a03-lying on back a04-lying on right side
-    filename = fullfile('data','a01','p2',fn);
-    fid = fopen(filename,'r');
-    datacell = textscan(fid, fs, 'Delimiter', ',');
-    fclose(fid);
-    B = cell2mat(datacell); %convert cell format to array format
-    A1 = [A1;B]; %everytime you read from a new text file 
+
+    for i=1:60
+        fnumber = num2str(i);%convert the number to string
+            %then depending on what number it is make that number the filename .txt
+        if i<10
+            fn = strcat('s0',fnumber,'.txt');
+        else
+            fn = strcat('s',fnumber,'.txt');
+        end
+        %a01-sitting a02-standing a03-lying on back a04-lying on right side
+        filename = fullfile('data','a02',pn,fn);
+        fid = fopen(filename,'r');
+        datacell = textscan(fid, fs, 'Delimiter', ',');
+        fclose(fid);
+        B = cell2mat(datacell); %convert cell format to array format
+        A2 = [A2;B]; %everytime you read from a new text file 
+    end
+
+    for i=1:60
+        fnumber = num2str(i);%convert the number to string
+            %then depending on what number it is make that number the filename .txt
+        if i<10
+            fn = strcat('s0',fnumber,'.txt');
+        else
+            fn = strcat('s',fnumber,'.txt');
+        end
+        %a01-sitting a02-standing a03-lying on back a04-lying on right side
+        filename = fullfile('data','a03',pn,fn);
+        fid = fopen(filename,'r');
+        datacell = textscan(fid, fs, 'Delimiter', ',');
+        fclose(fid);
+        B = cell2mat(datacell); %convert cell format to array format
+        A3 = [A3;B]; %everytime you read from a new text file 
+    end
+
+    for i=1:60
+        fnumber = num2str(i);%convert the number to string
+            %then depending on what number it is make that number the filename .txt
+        if i<10
+            fn = strcat('s0',fnumber,'.txt');
+        else
+            fn = strcat('s',fnumber,'.txt');
+        end
+        %a01-sitting a02-standing a03-lying on back a04-lying on right side
+        filename = fullfile('data','a04',pn,fn);
+        fid = fopen(filename,'r');
+        datacell = textscan(fid, fs, 'Delimiter', ',');
+        fclose(fid);
+        B = cell2mat(datacell); %convert cell format to array format
+        A4 = [A4;B]; %everytime you read from a new text file 
+    end
+
 end
+
+%from here put who thing into a sliding window
+
 %empty all but the first 9 columns of A
 A1(:,10:end) = [];
-
-A2 = []; %make empty array A to keep data in
-for i=1:60
-    fnumber = num2str(i);%convert the number to string
-        %then depending on what number it is make that number the filename .txt
-    if i<10
-        fn = strcat('s0',fnumber,'.txt');
-    else
-        fn = strcat('s',fnumber,'.txt');
-    end
-    %a01-sitting a02-standing a03-lying on back a04-lying on right side
-    filename = fullfile('data','a02','p2',fn);
-    fid = fopen(filename,'r');
-    datacell = textscan(fid, fs, 'Delimiter', ',');
-    fclose(fid);
-    B = cell2mat(datacell); %convert cell format to array format
-    A2 = [A2;B]; %everytime you read from a new text file 
-end
-
-%empty all but the first 9 columns of A
 A2(:,10:end) = [];
-
-A3 = []; %make empty array A to keep data in
-for i=1:60
-    fnumber = num2str(i);%convert the number to string
-        %then depending on what number it is make that number the filename .txt
-    if i<10
-        fn = strcat('s0',fnumber,'.txt');
-    else
-        fn = strcat('s',fnumber,'.txt');
-    end
-    %a01-sitting a02-standing a03-lying on back a04-lying on right side
-    filename = fullfile('data','a03','p2',fn);
-    fid = fopen(filename,'r');
-    datacell = textscan(fid, fs, 'Delimiter', ',');
-    fclose(fid);
-    B = cell2mat(datacell); %convert cell format to array format
-    A3 = [A3;B]; %everytime you read from a new text file 
-end
-%empty all but the first 9 columns of A
 A3(:,10:end) = [];
-
-
-A4 = []; %make empty array A to keep data in
-for i=1:60
-    fnumber = num2str(i);%convert the number to string
-        %then depending on what number it is make that number the filename .txt
-    if i<10
-        fn = strcat('s0',fnumber,'.txt');
-    else
-        fn = strcat('s',fnumber,'.txt');
-    end
-    %a01-sitting a02-standing a03-lying on back a04-lying on right side
-    filename = fullfile('data','a04','p2',fn);
-    fid = fopen(filename,'r');
-    datacell = textscan(fid, fs, 'Delimiter', ',');
-    fclose(fid);
-    B = cell2mat(datacell); %convert cell format to array format
-    A4 = [A4;B]; %everytime you read from a new text file 
-end
-%empty all but the first 9 columns of A
 A4(:,10:end) = [];
 
-%Add Time component
+%Add Time component just for plotting.
 %For this particular peice of data the time numbers are 
 %25Hz Sampling Frequency therefore each sample happens at 0.04 seconds
-timevector = linspace(0,300,7501);
+timevector = linspace(0,2400,60001);
 timevector(end) = [];
 
 %make features vectors
@@ -116,9 +124,36 @@ TPowerGZ = [];
 TPowerMX = [];
 TPowerMY = [];
 TPowerMZ = [];
+MeanP1 = [];
+MeanP2 = [];
+MeanP3 = [];
+
+%empty test data
+Average_t = [];
+Variance_t = [];
+Median_t = [];
+Skewness_t = [];
+Kurtosis_t = [];
+Per25_t = [];
+Per75_t = [];
+
+Peak_t = [];
+TPowerAX_t = [];
+TPowerAY_t = [];
+TPowerAZ_t = [];
+TPowerGX_t = [];
+TPowerGY_t = [];
+TPowerGZ_t = [];
+TPowerMX_t = [];
+TPowerMY_t = [];
+TPowerMZ_t = [];
+MeanP1_t = [];  
+MeanP2_t = [];
+MeanP3_t = [];
 
 %create an big Activities vector to hold activities and use this in the
-%loop
+
+%Better to show each person seperately?
 
 for Activity=1:4
     
@@ -161,22 +196,34 @@ for Activity=1:4
     AHRS = MadgwickAHRS('SamplePeriod', 1/25, 'Beta', 0.1);
     % AHRS = MahonyAHRS('SamplePeriod', 1/25, 'Kp', 0.5);
 
-    quaternion = zeros(length(timevector), 4);
-    for t = 1:length(timevector)
+    %seperate into training and test data with a 75:25 ratio respectively
+    %TRAINING
+    quaternion = zeros(length(timevector(1:45000)), 4);
+    for t = 1:length(timevector(1:45000))
         AHRS.Update(Gyroscope(t,:) * (pi/180), Accelerometer(t,:), Magnetometer(t,:));	
         % gyroscope units must be radians
         quaternion(t, :) = AHRS.Quaternion;
     end
     
+    %TEST
+    quaternion_test = zeros(length(timevector(45001:end)), 4);
+    for t_t = 45001:length(timevector)
+        AHRS.Update(Gyroscope(t_t,:) * (pi/180), Accelerometer(t_t,:), Magnetometer(t_t,:));	
+        % gyroscope units must be radians
+        quaternion_test((t_t-45000), :) = AHRS.Quaternion;
+    end
+    
     %may need to make TDF and FDT empty at each loop iteration
     
     %Now get Time domain features
-    TDF = TimeDF(Accelerometer,Gyroscope,Magnetometer);
+    TDF = TimeDF(Accelerometer(1:45000,:),Gyroscope(1:45000,:),Magnetometer(1:45000,:));
+    TDF_test = TimeDF(Accelerometer(45001:end,:),Gyroscope(45001:end,:),Magnetometer(45001:end,:));
     TimeNames = categorical({'Average', 'Variance', 'Median', 'Skewness', ...
         'Kurtosis' , '25 Percentile', '75 Percentile'});
 
     %Now get Frequency domain features
-    FDF = FrequencyDF(Accelerometer, Gyroscope, Magnetometer);
+    FDF = FrequencyDF(Accelerometer(1:45000,:), Gyroscope(1:45000,:), Magnetometer(1:45000,:));
+    FDF_test = FrequencyDF(Accelerometer(45001:end,:), Gyroscope(45001:end,:), Magnetometer(45001:end,:));
     FrequencyNames = ["Peak ","Total Power AX","Total Power AY", ...
         "Total Power AZ","Total Power GX","Total Power GY","Total Power GZ",...
         "Total Power MX","Total Power MY","Total Power MZ"];
@@ -185,6 +232,7 @@ for Activity=1:4
 
     euler = quatern2euler(quaternConj(quaternion)) * (180/pi);	% use conjugate 
     %for sensor frame relative to Earth and convert to degrees.
+    euler_test = quatern2euler(quaternConj(quaternion_test)) * (180/pi);
 
     %% Plot All Figures
 %{
@@ -256,12 +304,40 @@ for Activity=1:4
     TPowerMX = [TPowerMX,FDF(:,8)];
     TPowerMY = [TPowerMY,FDF(:,9)];
     TPowerMZ = [TPowerMZ,FDF(:,10)];
- 
+    MeanP1 = [MeanP1,FDF(1:9,11)];  
+    MeanP2 = [MeanP2,FDF(1:9,12)];
+    MeanP3 = [MeanP3,FDF(1:9,13)];
+    
+    %test data
+    
+    Average_t = [Average_t,TDF_test(:,1)];
+    Variance_t = [Variance_t,TDF_test(:,2)];
+    Median_t = [Median_t,TDF_test(:,3)];
+    Skewness_t = [Skewness_t,TDF_test(:,4)];
+    Kurtosis_t = [Kurtosis_t,TDF_test(:,5)];
+    Per25_t = [Per25_t,TDF_test(:,6)];
+    Per75_t = [Per75_t,TDF_test(:,7)];
+    
+    Peak_t = [Peak_t,FDF_test(1:9,1)];
+    TPowerAX_t = [TPowerAX_t,FDF_test(:,2)];
+    TPowerAY_t = [TPowerAY_t,FDF_test(:,3)];
+    TPowerAZ_t = [TPowerAZ_t,FDF_test(:,4)];
+    TPowerGX_t = [TPowerGX_t,FDF_test(:,5)];
+    TPowerGY_t = [TPowerGY_t,FDF_test(:,6)];
+    TPowerGZ_t = [TPowerGZ_t,FDF_test(:,7)];
+    TPowerMX_t = [TPowerMX_t,FDF_test(:,8)];
+    TPowerMY_t = [TPowerMY_t,FDF_test(:,9)];
+    TPowerMZ_t = [TPowerMZ_t,FDF_test(:,10)];
+    MeanP1_t = [MeanP1_t,FDF_test(1:9,11)];  
+    MeanP2_t = [MeanP2_t,FDF_test(1:9,12)];
+    MeanP3_t = [MeanP3_t,FDF_test(1:9,13)];
+    
 end
 
-Activities = categorical({'Sitting', 'Standing', 'Lying on Back', ...
-    'Lying on Right'});
+%Activities = categorical({'Sitting', 'Standing', 'Lying on Back', ...
+%    'Lying on Right'});
 
+%{
 figure('Name', 'Average Comparision');
 axis(1) = subplot(3,3,1);
 hold on;
@@ -328,17 +404,47 @@ title('Magnetometer Z Axis');
 hold off;
 linkaxes(axis, 'x');
 
-%what I want for frequency
-%semilogy(TPowerAX);
+%Frequency
 
-%Plot Euler Angles
-figure('Name', 'Euler Angles');
-hold on;
-plot(timevector, euler(:,1), 'r');
-plot(timevector, euler(:,2), 'g');
-plot(timevector, euler(:,3), 'b');
-title('Euler angles');
-xlabel('Time (s)');
-ylabel('Angle (deg)');
-legend('\phi', '\theta', '\psi');
-hold off;
+figure('Name', 'Power Spectrum');
+semilogy(TPowerAX);
+title('Accelerometer X Axis');
+xlabel('Frequency Components');
+ylabel('Power');
+legend('Sitting', 'Standing', 'Lying on Back','Lying on Right');
+%}
+
+    
+%% Putting Features together
+
+%Features Vector made up of all the frequency domain features 
+FeaturesVector = [Average; Variance; Median; Skewness; Kurtosis; Per25; ...
+Per75; Peak; MeanP1; MeanP2; MeanP3]';
+FeaturesVector_test = [Average_t; Variance_t; Median_t; Skewness_t; Kurtosis_t;...
+    Per25_t; Per75_t; Peak_t; MeanP1_t; MeanP2_t; MeanP3_t]';
+
+%% Feature Reduction/Selection
+
+[coeff,score,latent,tsquared,explained,mu] = pca(FeaturesVector');
+[coeff_t,score_t,latent_t,tsquared_t,explained_t,mu_t] = pca(FeaturesVector_test');
+
+%% Machine Learning Algorithm
+
+%seperate into training and test data with a 75:25 ratio respectively
+%all processing has already been done on training data
+
+%create labels
+
+label = [1;-1];
+label_t = [1;-1];
+
+addpath(genpath('libsvm'))
+
+model_linear = svmtrain(label, FeaturesVector(1:2,:), '-t 0');
+
+%right now just comparing standing and sitting so a1,a2
+
+%classifier = fitcsvm();
+%libsvmread
+
+[predict_label_L, accuracy_L, dec_values_L] = svmpredict(label_t, FeaturesVector_test(1:4,:), model_linear);
