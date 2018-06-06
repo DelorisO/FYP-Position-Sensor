@@ -447,4 +447,4 @@ model_linear = svmtrain(label, FeaturesVector(1:2,:), '-t 0');
 %classifier = fitcsvm();
 %libsvmread
 
-[predict_label_L, accuracy_L, dec_values_L] = svmpredict(label_t, FeaturesVector_test(1:4,:), model_linear);
+[predict_label_L, accuracy_L, dec_values_L] = svmpredict(label_t, FeaturesVector_test(1:2,:), model_linear);
