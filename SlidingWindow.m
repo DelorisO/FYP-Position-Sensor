@@ -1,20 +1,20 @@
 % Implementation of the sliding window function
-function SW = SlidingWindow(y)
-%Creating a function on which to test this with
+%function SW = SlidingWindow(y)
+y = linspace(1,10000,10000)';
+y = [y,y+(0.4*rand([10000 1]))];
+y = [y,y+(0.4*rand([10000 1]))];
+y = [y,y+(0.4*rand([10000 1]))];
+y = [y,y+(0.4*rand([10000 1]))];
+counter = 1;
+humanrate = 25; % 25 to get every 1 second what position it is)
 
-%Created a mock function to deal with this
-
-w=20;
-counter = 0;
-
-for k=1:5000
-    w_y(k)=y(k);
-    if mod(k,w) == 0
+for k=1:length(y)
+    if  mod(k,humanrate) == 0
         %do processing function
         %SW(k+1-w:k) = 2*w_y(k+1-w:k);
-        SW(k) = mean(w_y(k+1-w:k));
+        SW(counter,:) = mean(y(k+1-humanrate:k,:));
         counter = counter+1;
     end
 end
 
-end
+%end
