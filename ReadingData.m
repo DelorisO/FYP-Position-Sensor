@@ -99,18 +99,21 @@ A4(:,10:end) = [];
 
 % Begin to do ARHS by adding the quaternion library
 addpath('quaternion_library');
+%to get plots uncomment this and then uncomment plots part of process data
+%FeaturesVector = ProcessData(A1,A2,A3,A4);
 
+%%{
 FeaturesVector = [];
 FeaturesVector_test = [];
 %place in a sliding window at a frequency of 2Hz
 humanrate = 25;
 counter = 1;
 [numsamp,~] = size(A1);
-traindata = ceil(3*numsamp/4);
+traindatanum = ceil(3*numsamp/4);
 
 
 
-for k=1:traindata
+for k=1:traindatanum
     if  mod(k,humanrate) == 0
         FeaturesVector = [FeaturesVector;ProcessData(A1(k+1-humanrate:k,:),...
             A2(k+1-humanrate:k,:),A3(k+1-humanrate:k,:),A4(k+1-humanrate:k,:))];
@@ -118,12 +121,14 @@ for k=1:traindata
     end
 end
 
-for k_t=(traindata+1):numsamp
+for k_t=(traindatanum+1):numsamp
     if mod(k_t,humanrate) == 0
         FeaturesVector_test = [FeaturesVector_test;ProcessData(A1(k_t+1-humanrate:k_t,:)...
             ,A2(k_t+1-humanrate:k_t,:),A3(k_t+1-humanrate:k_t,:),A4(k_t+1-humanrate:k_t,:))];
     end
 end
+%}
+%{
 %% Feature Reduction/Selection
 
 [coeff,score,latent,tsquared,explained,mu] = pca(FeaturesVector');
@@ -135,9 +140,9 @@ end
 %all processing has already been done on training data
 
 %create labels
+%Featu
 
-label = [1;-1];
-label_t = [1;-1];
+
 
 addpath(genpath('libsvm'))
 
@@ -149,3 +154,4 @@ model_linear = svmtrain(label, FeaturesVector(1:2,:), '-t 0');
 %libsvmread
 
 [predict_label_L, accuracy_L, dec_values_L] = svmpredict(label_t, FeaturesVector_test(1:2,:), model_linear);
+%}

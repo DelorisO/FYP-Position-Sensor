@@ -116,12 +116,12 @@ power4(:,9) = mean(abs(MZFFT(bound2:end)).^2);
 
 [padsize,~] = size(AXFFT);
 
-peakpad = padarray(peak',(padsize-length(peak)),'post');
+peakpad = padarray(peak',(padsize-length(peak)),'post')/padsize;
 power1pad = padarray(power1,(padsize-length(power1)),'post')/padsize;
 power2pad = 3*padarray(power2',(padsize-length(power2)),'post')/padsize;
 power3pad = 3*padarray(power3',(padsize-length(power3)),'post')/padsize;
 power4pad = 3*padarray(power4',(padsize-length(power4)),'post')/padsize;
 
-FDT = [peakpad,power1pad,power2pad,power3pad,power4pad];
+FDT = zscore([peakpad,power1pad,power2pad,power3pad,power4pad]);
 
 end
