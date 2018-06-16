@@ -24,18 +24,13 @@ Per25 = [];
 Per75 = [];
 
 Peak = [];
-TPowerAX = [];
-TPowerAY = [];
-TPowerAZ = [];
-TPowerGX = [];
-TPowerGY = [];
-TPowerGZ = [];
-TPowerMX = [];
-TPowerMY = [];
-TPowerMZ = [];
+TPower = [];
 MeanP1 = [];
 MeanP2 = [];
 MeanP3 = [];
+SSkew = [];
+SKur = [];
+euler_avg = [];
 
 %create an big Activities vector to hold activities and use this in the
 
@@ -97,13 +92,14 @@ for Activity=1:4
     FDF = FrequencyDF(Accelerometer, Gyroscope, Magnetometer);
     FrequencyNames = ["Peak ","Total Power AX","Total Power AY", ...
         "Total Power AZ","Total Power GX","Total Power GY","Total Power GZ",...
-        "Total Power MX","Total Power MY","Total Power MZ"];
+        "Total Power MX","Total Power MY","Total Power MZ","Centroid"];
 
     %% Get Algorithm in terms of Euler Angles
 
     euler = quatern2euler(quaternConj(quaternion)) * (180/pi);	% use conjugate 
     %for sensor frame relative to Earth and convert to degrees.
    
+    euler_avg = [euler_avg;(mean(euler))];
     %% Plot All Figures
 %{
     %Plot the accelerometer, gyroscope and magnetometer data
@@ -165,19 +161,13 @@ for Activity=1:4
     Per75 = [Per75,TDF(:,7)];
     
     Peak = [Peak,FDF(1:9,1)];
-    TPowerAX = [TPowerAX,FDF(:,2)];
-    TPowerAY = [TPowerAY,FDF(:,3)];
-    TPowerAZ = [TPowerAZ,FDF(:,4)];
-    TPowerGX = [TPowerGX,FDF(:,5)];
-    TPowerGY = [TPowerGY,FDF(:,6)];
-    TPowerGZ = [TPowerGZ,FDF(:,7)];
-    TPowerMX = [TPowerMX,FDF(:,8)];
-    TPowerMY = [TPowerMY,FDF(:,9)];
-    TPowerMZ = [TPowerMZ,FDF(:,10)];
-    MeanP1 = [MeanP1,FDF(1:9,11)];  
-    MeanP2 = [MeanP2,FDF(1:9,12)];
-    MeanP3 = [MeanP3,FDF(1:9,13)];
-    
+    TPower = [TPower,FDF(:,2)];
+    MeanP1 = [MeanP1,FDF(1:9,3)];  
+    MeanP2 = [MeanP2,FDF(1:9,4)];
+    MeanP3 = [MeanP3,FDF(1:9,5)];
+    SSkew = [SSkew,FDF(1:9,6)];
+    SKur = [SKur,FDF(1:9,7)];
+
 end
 %Uncomment to plot
 %{
@@ -950,6 +940,8 @@ savefig('fpower3.fig');
 
 %Features Vector made up of all the frequency domain features 
 Features = [Average; Variance; Median; Skewness; Kurtosis; Per25; ...
-Per75; Peak; MeanP1; MeanP2; MeanP3]';
+Per75; Peak; MeanP1; MeanP2; MeanP3;SSkew;SKur]';
+
+Features = [Features,euler_avg];
 
 end

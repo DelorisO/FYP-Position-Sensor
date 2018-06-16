@@ -1,4 +1,4 @@
 function c = centroid(x,fs)
-fn = n * fs / length(x);
-c = sum((fn*x))/sum(x);
+f(n) = n * fs / length(x);
+c = sum((f(n)*x))/sum(x);
 end

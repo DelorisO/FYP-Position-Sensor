@@ -29,99 +29,113 @@ MZFFT = fft(Magnetometer(:,3));
 %--------------------------------------------------------------------------
 
 %Frequency Domain Features
-%cen = 0; leave this out for now
-%PSD = 0;
+%cen = 0; 
 peak = 0;
 power1 = []; %signal power in different frequency bands
 power2 = [];
 power3 = [];
-power4 = []; 
+power4 = [];
+sskew = [];
+skur = [];
 
 bound1 = ceil(length(AXFFT)/3);
 bound2 = ceil(2*length(AXFFT)/3);
+fs =25;
 
-%cen(:,1) = centroid(Accelerometer(:,1),fs);
-%PSD(:,1) = pwelch(AXFFT');
+%cen(:,1) = centroid(abs(AXFFT),fs);
 peak(:,1) = max(abs(AXFFT));
-power1(:,1) = abs(AXFFT).^2;
+power1(:,1) = mean(abs(AXFFT).^2);
 power2(:,1) = mean(abs(AXFFT(1:bound1)).^2);
 power3(:,1) = mean(abs(AXFFT(bound1:bound2)).^2);
 power4(:,1) = mean(abs(AXFFT(bound2:end)).^2);
+sskew(:,1) = skewness(abs(AXFFT));
+skur(:,1) = kurtosis(abs(AXFFT));
 
-%cen(:,2) = centroid(Accelerometer(:,2),fs);
-%PSD(:,2) = pwelch(Accelerometer(:,2));
+%cen(:,2) = centroid(abs(AYFFT),fs);
 peak(:,2) = max(abs(AYFFT));
-power1(:,2) = abs(AYFFT).^2;
+power1(:,2) = mean(abs(AYFFT).^2);
 power2(:,2) = mean(abs(AYFFT(1:bound1)).^2);
 power3(:,2) = mean(abs(AYFFT(bound1:bound2)).^2);
 power4(:,2) = mean(abs(AYFFT(bound2:end)).^2);
+sskew(:,2) = skewness(abs(AYFFT));
+skur(:,2) = kurtosis(abs(AYFFT));
 
-%cen(:,1) = centroid(Accelerometer(:,1),fs);
-%PSD(:,3) = pwelch(Accelerometer(:,3));
+%cen(:,3) = centroid(abs(AZFFT),fs);
 peak(:,3) = max(abs(AZFFT));
-power1(:,3) = abs(AZFFT).^2;
+power1(:,3) = mean(abs(AZFFT).^2);
 power2(:,3) = mean(abs(AZFFT(1:bound1)).^2);
 power3(:,3) = mean(abs(AZFFT(bound1:bound2)).^2);
 power4(:,3) = mean(abs(AZFFT(bound2:end)).^2);
+sskew(:,3) = skewness(abs(AZFFT));
+skur(:,3) = kurtosis(abs(AZFFT));
 
-%cen(:,1) = centroid(Accelerometer(:,1),fs);
-%PSD(:,4) = pwelch(Gyroscope(:,1));
+%cen(:,4) = centroid(abs(GXFFT),fs);
 peak(:,4) = max(abs(GXFFT));
-power1(:,4) = abs(GXFFT).^2;
+power1(:,4) = mean(abs(GXFFT).^2);
 power2(:,4) = mean(abs(GXFFT(1:bound1)).^2);
 power3(:,4) = mean(abs(GXFFT(bound1:bound2)).^2);
 power4(:,4) = mean(abs(GXFFT(bound2:end)).^2);
+sskew(:,4) = skewness(abs(GXFFT));
+skur(:,4) = kurtosis(abs(GXFFT));
 
-%cen(:,1) = centroid(Accelerometer(:,1),fs);
-%PSD(:,5) = pwelch(Gyroscope(:,2));
+%cen(:,5) = centroid(abs(GYFFT),fs);
 peak(:,5) = max(abs(GYFFT));
-power1(:,5) = abs(GYFFT).^2;
+power1(:,5) = mean(abs(GYFFT).^2);
 power2(:,5) = mean(abs(GYFFT(1:bound1)).^2);
 power3(:,5) = mean(abs(GYFFT(bound1:bound2)).^2);
 power4(:,5) = mean(abs(GYFFT(bound2:end)).^2);
+sskew(:,5) = skewness(abs(GYFFT));
+skur(:,5) = kurtosis(abs(GYFFT));
 
-%cen(:,1) = centroid(Accelerometer(:,1),fs);
-%PSD(:,6) = pwelch(Gyroscope(:,3));
+%cen(:,6) = centroid(abs(GZFFT),fs);
 peak(:,6) = max(abs(GZFFT));
-power1(:,6) = abs(GZFFT).^2;
+power1(:,6) = mean(abs(GZFFT).^2);
 power2(:,6) = mean(abs(GZFFT(1:bound1)).^2);
 power3(:,6) = mean(abs(GZFFT(bound1:bound2)).^2);
 power4(:,6) = mean(abs(GZFFT(bound2:end)).^2);
+sskew(:,6) = skewness(abs(GZFFT));
+skur(:,6) = kurtosis(abs(GZFFT));
 
-%cen(:,1) = centroid(Accelerometer(:,1),fs);
-%PSD(:,7) = pwelch(Magnetometer(:,1));
+%cen(:,7) = centroid(abs(MXFFT),fs);
 peak(:,7) = max(abs(MXFFT));
-power1(:,7) = abs(MXFFT).^2;
+power1(:,7) = mean(abs(MXFFT).^2);
 power2(:,7) = mean(abs(MXFFT(1:bound1)).^2);
 power3(:,7) = mean(abs(MXFFT(bound1:bound2)).^2);
 power4(:,7) = mean(abs(MXFFT(bound2:end)).^2);
+sskew(:,7) = skewness(abs(MXFFT));
+skur(:,7) = kurtosis(abs(MXFFT));
 
-%cen(:,1) = centroid(Accelerometer(:,1),fs);
-%PSD(:,8) = pwelch(Magnetometer(:,2));
+%cen(:,8) = centroid(abs(MYFFT),fs);
 peak(:,8) = max(abs(MYFFT));
-power1(:,8) = abs(MYFFT).^2;
+power1(:,8) = mean(abs(MYFFT).^2);
 power2(:,8) = mean(abs(MYFFT(1:bound1)).^2);
 power3(:,8) = mean(abs(MYFFT(bound1:bound2)).^2);
 power4(:,8) = mean(abs(MYFFT(bound2:end)).^2);
+sskew(:,8) = skewness(abs(MYFFT));
+skur(:,8) = kurtosis(abs(MYFFT));
 
-%cen(:,1) = centroid(Accelerometer(:,1),fs);
-%PSD(:,9) = pwelch(Magnetometer(:,3));
+%cen(:,9) = centroid(abs(MZFFT),fs);
 peak(:,9) = max(abs(MZFFT));
-power1(:,9) = abs(MZFFT).^2;
+power1(:,9) = mean(abs(MZFFT).^2);
 power2(:,9) = mean(abs(MZFFT(1:bound1)).^2);
 power3(:,9) = mean(abs(MZFFT(bound1:bound2)).^2);
 power4(:,9) = mean(abs(MZFFT(bound2:end)).^2);
+sskew(:,9) = skewness(abs(MZFFT));
+skur(:,9) = kurtosis(abs(MZFFT));
 
 %need to pad all arrays so they can go out as 1 ... 
 
-[padsize,~] = size(AXFFT);
+[N,~] = size(AXFFT);
 
-peakpad = padarray(peak',(padsize-length(peak)),'post')/padsize;
-power1pad = padarray(power1,(padsize-length(power1)),'post')/padsize;
-power2pad = 3*padarray(power2',(padsize-length(power2)),'post')/padsize;
-power3pad = 3*padarray(power3',(padsize-length(power3)),'post')/padsize;
-power4pad = 3*padarray(power4',(padsize-length(power4)),'post')/padsize;
+peakpad = peak'/N;
+power1pad = power1'/N;
+power2pad = 3*power2'/N;
+power3pad = 3*power3'/N;
+power4pad = 3*power4'/N;
+%cen = cen'/N;
+sskew = sskew'/N;
+skur = skur'/N;
 
-FDT = zscore([peakpad,power1pad,power2pad,power3pad,power4pad]);
+FDT = [peakpad,power1pad,power2pad,power3pad,power4pad,sskew,skur];
 
 end

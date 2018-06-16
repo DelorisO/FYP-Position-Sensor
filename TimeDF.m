@@ -14,7 +14,6 @@ skew = 0;
 kurto = 0;
 per25 = 0;
 per75 = 0;
-
 %load('ExampleData.mat');
 
 %since data will be moving implement either an overlap and add or an

@@ -4,14 +4,14 @@ addpath(genpath('libsvm'))
 [numdata,~] = size(FeaturesVector);
 [numdata_t,~] = size(FeaturesVector_test);
 %scale the vectors using zscore
-features_scale = FeaturesVector;%zscore();
-features_t_scale = FeaturesVector_test;%zscore();
+features_scale = scalefeatures(FeaturesVector);
+features_t_scale = scalefeatures(FeaturesVector_test);
 %make train data equal to a sparse vector which is the form needed for
 %libsvm
 traindata=sparse(features_scale);
 testdata=sparse(features_t_scale);
-for i=4:4
-    
+%for i=1:1
+i=1;   
     %training labels
     labels=[];
     for j=1:numdata
@@ -45,20 +45,24 @@ for i=4:4
     %[predict_label_L, accuracy_L, dec_values_L] = svmpredict(labels_t, ...
     %    testdata, model_linear);
     
-    Cpw = linspace(-5,9,8);
-    gpw = linspace(-10,4,8);
+    Cpw = linspace(5,9,2);
+    gpw = linspace(-10,-8,2);
     counter = 1;
     Cgvalues=[];
-    %CVAccuracy = [];
-    for k=1:8
-        for j=1:8
+    CVAccuracy = zeros(9,9);
+    for k=1:2
+        for j=1:2
             CVarg = sprintf('-t 2 -c %d -g %d -v 10',2^Cpw(k),2^gpw(j));
             CVAccuracy(k,j) = svmtrain(labels, traindata, CVarg);
-            Cgvalues(counter,:) = [2^(Cpw(k)),2^(gpw(j))];
+            svmarg = sprintf('-t 2 -c %d -g %d',2^Cpw(k),2^gpw(j));
+            model_rbf = svmtrain(labels, traindata, svmarg);
+            %Cgvalues(counter,:) = [2^(Cpw(k)),2^(gpw(j))];
+            [~,trainerroracc,~] = svmpredict(labels,traindata, model_rbf);
+            trainerror(k,j) = trainerroracc(1);
             counter=counter+1;
         end
     end
-    save('CVAccA4vsRest.mat',CVAccuracy);
+    %save('CVAccA4vsRest.mat',CVAccuracy);
     
     [~,maxInd] = max(CVAccuracy(:));
     maxIndOverall(i) = maxInd;
@@ -68,5 +72,5 @@ for i=4:4
     [predict_label_R, accuracy_R, dec_values_R] = ...
         svmpredict(labels_t,testdata, model_rbf);
     %acc(i)=accuracy_R;
-end
+%end
 %end
