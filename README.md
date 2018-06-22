@@ -1,11 +1,10 @@
 # FYP-Position-Sensor
 Imperial College Student Final Year Projects Github Repository
 
-Credit to http://x-io.co.uk/ for their AHRS Algorithm
+Monitoring body positions can aid the diagnosis of epilepsy and sleep apnoea, and it is often required for days, weeks or sometimes even months. However, many patients are awaiting a diagnosis because the equipment and facilities needed for monitoring are expensive and sparse. Therefore, creating a device which can monitor body position remotely and continuously could help in the diagnosis of these aliments. This project aims to create a wearable device to estimate the body position an individual, while in everyday activities. The main aspects of the project lay in choosing suitable low-power sensors, creating the wireless functionality of the device, implementing a signal processing algorithm and a classification technique, to determine what body position the individual is in. The expected use of this device will be for a patient to wear this device in their own home, consequently the power, time and complexity are all important aspects of the project, to accurately determine this there is an comparison of the different techniques and preliminary testing done on individuals.
 
 # User Guide
-In order to replicate my results the following Dataset is need: https://archive.ics.uci.edu/ml/
-datasets/Daily+and+Sports+Activities
+In order to replicate my results the following Dataset is need: https://archive.ics.uci.edu/ml/datasets/Daily+and+Sports+Activities
 
 For the signal processing the AHRS algorithm will be need from this link: https://github.com/
 xioTechnologies/Open-Source-AHRS-With-x-IMU
