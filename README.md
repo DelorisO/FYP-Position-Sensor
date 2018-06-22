@@ -3,8 +3,6 @@ Imperial College Student Final Year Projects Github Repository
 
 Credit to http://x-io.co.uk/ for their AHRS Algorithm
 
-Download Dasta
-
 # User Guide
 In order to replicate my results the following Dataset is need: https://archive.ics.uci.edu/ml/
 datasets/Daily+and+Sports+Activities
