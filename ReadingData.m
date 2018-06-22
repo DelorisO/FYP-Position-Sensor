@@ -127,6 +127,7 @@ for k_t=(traindatanum+1):numsamp
             ,A2(k_t+1-humanrate:k_t,:),A3(k_t+1-humanrate:k_t,:),A4(k_t+1-humanrate:k_t,:))];
     end
 end
+
 %}
 %{
 %% Feature Reduction/Selection

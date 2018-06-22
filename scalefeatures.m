@@ -1,5 +1,5 @@
 function new_f = scalefeatures(f)
-
+%scales features along columns
 [rows, cols] = size(f);
 min_work=min(f);
 max_work=max(f);
